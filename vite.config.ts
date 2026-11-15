@@ -4,8 +4,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 
 const https = process.env.HTTPS === '1';
+/** URL path the app is served from. "/" locally; "/<repo>/" on GitHub Pages (set by the deploy workflow). */
+const base = process.env.BASE_PATH || '/';
 
 export default defineConfig({
+  base,
   plugins: [
     ...(https ? [basicSsl()] : []),
     VitePWA({

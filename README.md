@@ -40,9 +40,20 @@ docker compose run --rm dev npm install <pkg>                  # add a dependenc
 docker compose run --rm dev npx vite-node scripts/bench.ts 9 20  # benchmark the generator
 ```
 
-## Deployment
+## Deployment (GitHub Pages)
 
-`dist/` is a static site. Host it anywhere that serves static files over HTTPS (GitHub Pages, Netlify, Vercel, …).
+The workflow in `.github/workflows/deploy.yml` tests, builds and deploys the app on every push to `main`. You can also run it by hand from the **Actions** tab.
+
+One-time setup:
+1. Push the repo to GitHub.
+2. In the repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
+3. Push to `main`, or run the workflow by hand. The app goes live at `https://<your-username>.github.io/<repo-name>/`.
+
+The workflow sets `BASE_PATH=/<repo-name>/`, so asset URLs and the service worker work under that subpath. Locally the app is served from `/`.
+
+On iPhone: open the URL in Safari → Share → **Add to Home Screen**. The installed app works offline and updates itself after each deploy.
+
+`dist/` is a plain static site, so any other static host (Netlify, Vercel, Cloudflare Pages) works too. Use build command `npm run build` and output folder `dist`.
 
 ## How it works
 
